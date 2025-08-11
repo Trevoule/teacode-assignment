@@ -2,6 +2,8 @@
 
 ## Overview
 
+![Application Screenshot](./screenshot/app-demo.png)
+
 This React application displays a list of contacts fetched from a remote JSON endpoint. Users can view, filter, and select contacts with checkboxes, with selections logged to the console. The app is implemented with performance in mind, using memoization and context splitting to minimize re-renders in a large list.
 
 ## Tech Stack
