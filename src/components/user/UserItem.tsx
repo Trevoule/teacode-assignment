@@ -1,12 +1,12 @@
 import { memo } from 'react';
 
 import type { User } from '@/types';
-import { useUsersCtx } from '@/context';
+import { useUsersActionsCtx } from '@/context';
 
 const UserItem = ({ user }: { user: User }) => {
   const { id, first_name, last_name, avatar, email, checked } = user;
 
-  const { handleCheck } = useUsersCtx();
+  const { handleCheck } = useUsersActionsCtx();
 
   const renderAvatar = () => {
     if (avatar) {

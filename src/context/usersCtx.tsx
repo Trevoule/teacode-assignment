@@ -2,22 +2,33 @@ import React, { useMemo } from 'react';
 
 import { type UseUsersType, useUsers } from '@/hooks/useUsers';
 
-const UsersCtx = React.createContext<null | UseUsersType>(null);
+const UsersDataCtx = React.createContext<null | Omit<UseUsersType, 'handleCheck'>>(null);
+const UsersActionCtx = React.createContext<null | Pick<UseUsersType, 'handleCheck'>>(null);
 
 const UsersProvider = ({ children, username }: { children: React.ReactNode; username: string }) => {
   const { loading, error, users, handleCheck } = useUsers({ username });
 
-  const value = useMemo(
+  const dataValue = useMemo(
     () => ({
       users,
-      handleCheck,
       loading,
       error
     }),
-    [users, handleCheck, loading, error]
+    [users, loading, error]
   );
 
-  return <UsersCtx.Provider value={value}>{children}</UsersCtx.Provider>;
+  const actionsValue = useMemo(
+    () => ({
+      handleCheck
+    }),
+    [handleCheck]
+  );
+
+  return (
+    <UsersDataCtx.Provider value={dataValue}>
+      <UsersActionCtx.Provider value={actionsValue}>{children}</UsersActionCtx.Provider>
+    </UsersDataCtx.Provider>
+  );
 };
 
-export { UsersCtx, UsersProvider };
+export { UsersActionCtx, UsersDataCtx, UsersProvider };

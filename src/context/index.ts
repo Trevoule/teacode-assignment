@@ -1,4 +1,4 @@
-import { useUsersCtx } from './useUsersCtx';
-import { UsersCtx, UsersProvider } from './usersCtx';
+import { useUsersActionsCtx, useUsersDataCtx } from './useUsersCtx';
+import { UsersActionCtx, UsersDataCtx, UsersProvider } from './usersCtx';
 
-export { useUsersCtx, UsersCtx, UsersProvider };
+export { useUsersActionsCtx, useUsersDataCtx, UsersActionCtx, UsersDataCtx, UsersProvider };
