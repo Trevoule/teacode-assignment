@@ -2,18 +2,23 @@ import { useEffect, useMemo, useState } from 'react';
 import { debounce } from 'lodash';
 
 import { SearchIcon } from './SearchIcon';
-import type { SearchFormProps } from './types';
+import type { Input } from './types';
 
-const Search = ({ userName, setUserName }: SearchFormProps) => {
-  const [inputValue, setInputValue] = useState(userName);
+const SearchInput = ({
+  value,
+  onChange,
+  placeholder = 'Search users...',
+  id = 'search'
+}: Input) => {
+  const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
-    setInputValue(userName);
-  }, [userName]);
+    setInputValue(value);
+  }, [value]);
 
   const debouncedSearch = useMemo(
-    () => debounce((value: string) => setUserName(value), 500),
-    [setUserName]
+    () => debounce((dValue: string) => onChange(dValue), 500),
+    [onChange]
   );
 
   useEffect(() => {
@@ -30,19 +35,19 @@ const Search = ({ userName, setUserName }: SearchFormProps) => {
 
   return (
     <div className="w-5/10 flex flex-grow items-center gap-x-2 py-2 px-4 border-2 border-gray-200 rounded-xl">
-      <label htmlFor="search">
+      <label htmlFor={id}>
         <SearchIcon />
       </label>
       <input
         className="flex-grow focus:outline-0"
-        id="search"
+        id={id}
         type="text"
         value={inputValue}
         onChange={handleUserSearch}
-        placeholder="Search users..."
+        placeholder={placeholder}
       />
     </div>
   );
 };
 
-export default Search;
+export default SearchInput;
