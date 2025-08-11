@@ -56,26 +56,20 @@ const useUsers = ({ username }: { username: string }) => {
     return sortByLastName(result);
   }, [loading, error, data, username]);
 
-  const handleCheck = useCallback(
-    (id: number) => {
-      const updatedChecked = data.map((item) => {
-        if (item.id === id) {
-          return {
-            ...item,
-            checked: true
-          };
-        }
+  const handleCheck = useCallback((id: number) => {
+    setData((prevData) =>
+      prevData.map((item) => (item.id === id ? { ...item, checked: !item.checked } : item))
+    );
+  }, []);
 
-        return item;
-      });
-
-      setData(updatedChecked);
-
-      const checkedUsers = updatedChecked.filter((user) => user.checked).map((user) => user.id);
-      console.log(checkedUsers);
-    },
+  const checkedUsers = useMemo(
+    () => data.filter((user) => user.checked).map((user) => user.id),
     [data]
   );
+
+  useEffect(() => {
+    console.log(checkedUsers);
+  }, [checkedUsers]);
 
   return { loading, error, users, handleCheck };
 };

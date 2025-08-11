@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import type { User } from '@/types';
 
 interface UserItemProps {
@@ -43,4 +45,4 @@ const UserItem = ({ user, handleCheck }: UserItemProps) => {
   );
 };
 
-export default UserItem;
+export default memo(UserItem);
