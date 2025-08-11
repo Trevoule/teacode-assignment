@@ -1,14 +1,12 @@
 import { memo } from 'react';
 
 import type { User } from '@/types';
+import { useUsersCtx } from '@/context';
 
-interface UserItemProps {
-  user: User;
-  handleCheck: (id: number) => void;
-}
-
-const UserItem = ({ user, handleCheck }: UserItemProps) => {
+const UserItem = ({ user }: { user: User }) => {
   const { id, first_name, last_name, avatar, email, checked } = user;
+
+  const { handleCheck } = useUsersCtx();
 
   const renderAvatar = () => {
     if (avatar) {
@@ -21,6 +19,8 @@ const UserItem = ({ user, handleCheck }: UserItemProps) => {
       );
     }
   };
+
+  console.log(id);
 
   return (
     <div className="h-20 flex-grow flex p-2 gap-x-5 items-center border-1 border-white bg-gray-200 rounded-md shadow-xs">
