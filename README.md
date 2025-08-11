@@ -1,12 +1,79 @@
-# React + Vite
+# React Contacts List
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+This React application displays a list of contacts fetched from a remote JSON endpoint. Users can view, filter, and select contacts with checkboxes, with selections logged to the console. The app is implemented with performance in mind, using memoization and context splitting to minimize re-renders in a large list.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
 
-## Expanding the ESLint configuration
+- **React.js v19**
+- **TypeScript**
+- **Tailwind CSS**
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Requirements
+
+- **Node.js** version ≥20 is required
+
+## Features
+
+### Contact Display
+
+- Contacts are sorted alphabetically by `last_name`
+- Each contact displays an avatar (or initials if avatar is missing)
+- Shows first and last name
+- Includes a selectable checkbox
+
+### Filtering
+
+- Text input allows filtering by first and last name (case-insensitive)
+- Filtering does **NOT** reset or alter selected checkboxes
+
+### Selection
+
+- Clicking a contact toggles its checkbox on/off
+- IDs of all selected contacts are logged to the console on each toggle
+
+### Performance Optimization
+
+- `UserItem` components memoized with `React.memo` to avoid unnecessary re-renders
+- React Context split into separate Providers for user data and actions to reduce consumer re-renders
+- Stable memoized callbacks (`useCallback`) and immutable state updates
+
+## Getting Started
+
+### Prerequisites
+
+Ensure you have Node.js version 20 or higher installed on your system.
+
+### Installation
+
+1. **Clone this repository:**
+
+   ```bash
+   git clone https://github.com/Trevoule/teacode-assignment.git
+   cd teacode-assignment
+   ```
+
+2. **Install dependencies:**
+
+   ```bash
+   npm install
+   ```
+
+   or
+
+   ```bash
+   yarn install
+   ```
+
+3. **Start the development server:**
+
+   ```bash
+   npm run dev
+   ```
+
+   or
+
+   ```bash
+   yarn run dev
+   ```
