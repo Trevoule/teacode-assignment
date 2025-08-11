@@ -74,4 +74,6 @@ const useUsers = ({ username }: { username: string }) => {
   return { loading, error, users, handleCheck };
 };
 
-export default useUsers;
+export { useUsers };
+
+export type UseUsersType = ReturnType<typeof useUsers>;
