@@ -1,23 +1,35 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { debounce } from 'lodash';
 
 import { SearchIcon } from './SearchIcon';
 import type { SearchFormProps } from './types';
 
 const Search = ({ userName, setUserName }: SearchFormProps) => {
-  const [text, setText] = useState(userName);
+  const [inputValue, setInputValue] = useState(userName);
 
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  useEffect(() => {
+    setInputValue(userName);
+  }, [userName]);
 
-    if (!text) return;
+  const debouncedSearch = useMemo(
+    () => debounce((value: string) => setUserName(value), 500),
+    [setUserName]
+  );
 
-    setUserName(text);
+  useEffect(() => {
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [debouncedSearch]);
+
+  const handleUserSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setInputValue(value);
+    debouncedSearch(value);
   };
 
   return (
-    <form
-      onSubmit={handleSearch}
-      className="w-5/10 flex flex-grow items-center gap-x-2 py-2 px-4 border-2 border-gray-200 rounded-xl">
+    <div className="w-5/10 flex flex-grow items-center gap-x-2 py-2 px-4 border-2 border-gray-200 rounded-xl">
       <label htmlFor="search">
         <SearchIcon />
       </label>
@@ -25,10 +37,11 @@ const Search = ({ userName, setUserName }: SearchFormProps) => {
         className="flex-grow focus:outline-0"
         id="search"
         type="text"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
+        value={inputValue}
+        onChange={handleUserSearch}
+        placeholder="Search users..."
       />
-    </form>
+    </div>
   );
 };
 
